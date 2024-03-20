@@ -1,9 +1,10 @@
-import {React, useState } from "react";
+import {React, useState, useRef } from "react";
 import { auth, db } from "../firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
-const SendMessage = () => {
+const SendMessage = ({ scroll }) => {
   const [message, setMessage] = useState("");
+  //const scroll = useRef();
   const sendMessage = async (event) => {
     event.preventDefault();
     if (message.trim() === "") {
@@ -16,9 +17,10 @@ const SendMessage = () => {
       name: displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
-      uid,
+      uid
     });
     setMessage("");
+    scroll.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
